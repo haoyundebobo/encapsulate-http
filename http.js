@@ -10,14 +10,14 @@ let $mConfig={apiPath:'',header:{},ExpiredCode:[],ExpiredFn:true,token:''};
 
 async function HTTP(obj, config) {
 	const cancelloading=obj.data.cancelloading;
-	cancelloading===true && await $loading.openloading(obj.data.mloading, obj.data.mmsg)
+	cancelloading!==true && await $loading.openloading(obj.data.mloading, obj.data.mmsg)
 	return new Promise((resolve, reject) => {
 		let options = {
 			dataType: "json",
 			header:$mConfig.header,
 			success: (res) => {
 				if ($mConfig.ExpiredCode.indexOf(res.data.code) !== -1) {
-					if (!obj.data.cancelajax) {
+					if (obj.data.cancelajax!==true) {
 						$resetajax.commit('set_temporaryajax', {
 							url: obj.url,
 							data: obj.data,
@@ -66,7 +66,7 @@ async function HTTP(obj, config) {
 				})
 			},
 			complete: (err) => {
-				!cancelloading && $loading.closeloading()
+				cancelloading!==true && $loading.closeloading()
 			}
 		};
 		options = {
@@ -131,7 +131,9 @@ function $mUtilsMsg(obj, callback) {
 	}, 1500);
 }
 function set_$mConfig(n,e){
-	$mConfig[n]=e
+	for (let i in n) {
+		$mConfig[i]=n[i]
+	}
 }
 export default {
 	POST(url, data = {}, config) {

@@ -32,9 +32,7 @@ export default {
 			}
 			state.notGoLogin = true
 		},
-		async implement_temporaryajax(state, token) {
-			$http.set_$mConfig('token',token)
-			$http.set_$mConfig('header',{token})
+		async implement_temporaryajax(state) {
 			for (let index in state.temporaryajax) {
 				$http[state.temporaryajax[index].method](state.temporaryajax[index].url, state.temporaryajax[index]
 					.data).then((res) => {

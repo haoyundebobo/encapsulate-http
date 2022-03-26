@@ -1,3 +1,4 @@
+```
 app.use($httpProxy,{
   apiPath:'http://39.105.127.96:8085/' ,//接口请求域名,
   ExpiredCode:[500,700,2001],//token过期 自动请求,
@@ -23,10 +24,15 @@ onUnload() {
 	}　
 }
 登录成功跳转前 因为要设置 token 和 清空节流判断flag
+this.$set_$mConfig({
+	token:res.token,
+	header:{token:res.token}
+})
 this.$mUtils.whereBack(()=>{
 	this.implement_temporaryajax=true
-	this.$resetAjax.commit('implement_temporaryajax',res.token)
+	this.$resetAjax.commit('implement_temporaryajax')
 })
 
 ps：uniapp 弹窗是针对整个项目 ，假如a界面弹窗 ，没有关闭来到b。
 	b 是没有弹窗 假如b返回，a弹窗继续，假如 b 调用弹窗api b 弹窗，a弹窗就会关闭消失
+```
